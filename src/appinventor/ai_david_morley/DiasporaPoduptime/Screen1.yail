@@ -1,0 +1,344 @@
+#|
+$Source $Yail
+|#
+
+(define-form appinventor.ai_david_morley.DiasporaPoduptime.Screen1 Screen1)
+(require <com.google.youngandroid.runtime>)
+(def done #f)
+
+(def (circle cirname )
+(set-and-coerce-property! 'Canvas1 'Visible #t 'boolean)
+
+(set-var! counter  1)
+
+(set-and-coerce-property! 'pauser 'TimerInterval 555 'number)
+
+(set-and-coerce-property! 'pauser 'TimerEnabled #t 'boolean)
+
+ )
+(def (viewmore name1 )
+((get-var circle) *the-null-value*)
+
+(call-component-method 'WebViewer1 'GoToUrl (*list-for-runtime* (call-yail-primitive yail-list-get-item (*list-for-runtime* (call-yail-primitive string-split-at-spaces (*list-for-runtime* (call-yail-primitive string-append (*list-for-runtime* "http://podupti.me/api-more.php?key=4r45tg&url=" (lexical-value name1)
+)
+ '( text text)
+ "join")
+)
+ '( text)
+ "split at spaces")
+ 1)
+ '( list number)
+ "select list item")
+)
+ '( text)
+)
+
+(set-and-coerce-property! 'Button3 'Text (call-yail-primitive string-append (*list-for-runtime* "Open Pod " (call-yail-primitive yail-list-get-item (*list-for-runtime* (call-yail-primitive string-split-at-spaces (*list-for-runtime* (lexical-value name1)
+)
+ '( text)
+ "split at spaces")
+ 1)
+ '( list number)
+ "select list item")
+)
+ '( text text)
+ "join")
+ 'text)
+
+(if (call-yail-primitive string-contains (*list-for-runtime* (lexical-value name1)
+ "https")
+ '( text text)
+ "contains")
+ (begin (set-and-coerce-property! 'Button3 'TextColor (call-yail-primitive make-color (*list-for-runtime* (call-yail-primitive make-yail-list (*list-for-runtime* 0 100 0)
+ '( any any any)
+ "make a list")
+)
+ '( list)
+ "make color")
+ 'number)
+
+(set-and-coerce-property! 'pauser 'TimerInterval 1 'number)
+
+)
+ (begin (set-and-coerce-property! 'Button3 'TextColor (call-yail-primitive make-color (*list-for-runtime* (call-yail-primitive make-yail-list (*list-for-runtime* 72 61 139)
+ '( any any any)
+ "make a list")
+)
+ '( list)
+ "make color")
+ 'number)
+
+(set-and-coerce-property! 'pauser 'TimerInterval 1 'number)
+
+)
+)
+
+(set-and-coerce-property! 'Button3 'Visible #t 'boolean)
+
+(set-and-coerce-property! 'webvisible 'TimerEnabled #t 'boolean)
+
+ )
+(def allpods (call-yail-primitive make-yail-list (*list-for-runtime* #t)
+ '( any)
+ "make a list")
+)
+
+(def counter 30)
+
+;;; Screen1
+(do-after-form-creation (set-and-coerce-property! 'Screen1 'Icon "android-dude128.png" 'text)
+(set-and-coerce-property! 'Screen1 'ScreenOrientation "portrait" 'text)
+(set-and-coerce-property! 'Screen1 'Title "DiasporaPoduptime" 'text)
+)
+(define-event Screen1 Initialize()
+ (set-this-form)
+ (set-and-coerce-property! 'Clock1 'TimerInterval 5 'number)
+
+((get-var circle) *the-null-value*)
+
+)
+;;; HorizontalArrangement1
+(add-component Screen1 HorizontalArrangement HorizontalArrangement1 )
+;;; HorizontalArrangement4
+(add-component HorizontalArrangement1 HorizontalArrangement HorizontalArrangement4 )
+;;; Image1
+(add-component HorizontalArrangement4 Image Image1 (set-and-coerce-property! 'Image1 'Picture "diaspora+logo.png" 'text)
+)
+;;; HorizontalArrangement2
+(add-component HorizontalArrangement1 HorizontalArrangement HorizontalArrangement2 (set-and-coerce-property! 'HorizontalArrangement2 'Width 50 'number)
+)
+;;; HorizontalArrangement3
+(add-component HorizontalArrangement1 HorizontalArrangement HorizontalArrangement3 (set-and-coerce-property! 'HorizontalArrangement3 'Height -2 'number)
+)
+;;; ListPicker1
+(add-component HorizontalArrangement3 ListPicker ListPicker1 (set-and-coerce-property! 'ListPicker1 'BackgroundColor #xFF0000FF 'number)
+(set-and-coerce-property! 'ListPicker1 'FontBold #t 'boolean)
+(set-and-coerce-property! 'ListPicker1 'Height 100 'number)
+(set-and-coerce-property! 'ListPicker1 'Text "Pick a Pod" 'text)
+(set-and-coerce-property! 'ListPicker1 'TextColor #xFFFFFFFF 'number)
+(set-and-coerce-property! 'ListPicker1 'Visible #f 'boolean)
+(set-and-coerce-property! 'ListPicker1 'Width 150 'number)
+)
+(define-event ListPicker1 BeforePicking()
+ (set-this-form)
+ (set-var! done  #f)
+
+)
+(define-event ListPicker1 AfterPicking()
+ (set-this-form)
+ (set-and-coerce-property! 'WebViewer1 'Visible #f 'boolean)
+
+(call-component-method 'WebViewer1 'GoHome (*list-for-runtime*)
+ '())
+
+((get-var viewmore) (get-property 'ListPicker1 'Selection)
+)
+
+(set-and-coerce-property! 'Label1 'Visible #f 'boolean)
+
+(set-and-coerce-property! 'ListPicker1 'Text "Pick another pod" 'text)
+
+)
+;;; Button3
+(add-component Screen1 Button Button3 (set-and-coerce-property! 'Button3 'Text "Open Pod" 'text)
+(set-and-coerce-property! 'Button3 'Visible #f 'boolean)
+(set-and-coerce-property! 'Button3 'Width -2 'number)
+)
+(define-event Button3 Click()
+ (set-this-form)
+ (set-and-coerce-property! 'ActivityStarter1 'DataUri (call-yail-primitive string-append (*list-for-runtime* (call-yail-primitive yail-list-get-item (*list-for-runtime* (call-yail-primitive string-split-at-spaces (*list-for-runtime* (get-property 'Button3 'Text)
+)
+ '( text)
+ "split at spaces")
+ 3)
+ '( list number)
+ "select list item")
+ "/users/sign_in.mobile?pk_campaign=poduptimeandroid")
+ '( text text)
+ "join")
+ 'text)
+
+(call-component-method 'ActivityStarter1 'StartActivity (*list-for-runtime*)
+ '())
+
+)
+;;; WebViewer1
+(add-component Screen1 WebViewer WebViewer1 )
+;;; results
+(add-component Screen1 Label results (set-and-coerce-property! 'results 'FontSize 12.0 'number)
+(set-and-coerce-property! 'results 'TextAlignment 1 'number)
+)
+;;; Button1
+(add-component Screen1 Button Button1 (set-and-coerce-property! 'Button1 'FontSize 12 'number)
+(set-and-coerce-property! 'Button1 'FontTypeface 2 'number)
+(set-and-coerce-property! 'Button1 'Text "Get Pod's from podupti.me" 'text)
+(set-and-coerce-property! 'Button1 'Visible #f 'boolean)
+(set-and-coerce-property! 'Button1 'Width -2 'number)
+)
+(define-event Button1 Click()
+ (set-this-form)
+ (set-and-coerce-property! 'Clock1 'TimerInterval 5 'number)
+
+)
+;;; Canvas1
+(add-component Screen1 Canvas Canvas1 (set-and-coerce-property! 'Canvas1 'Height 64 'number)
+(set-and-coerce-property! 'Canvas1 'PaintColor #xFF0000FF 'number)
+(set-and-coerce-property! 'Canvas1 'Visible #f 'boolean)
+(set-and-coerce-property! 'Canvas1 'Width 64 'number)
+)
+;;; ImageSprite1
+(add-component Canvas1 ImageSprite ImageSprite1 (set-and-coerce-property! 'ImageSprite1 'Interval 100 'number)
+(set-and-coerce-property! 'ImageSprite1 'Picture "asterisks.png" 'text)
+(set-and-coerce-property! 'ImageSprite1 'Speed 1000 'number)
+(set-and-coerce-property! 'ImageSprite1 'X 126 'number)
+(set-and-coerce-property! 'ImageSprite1 'Y -2 'number)
+)
+;;; Label1
+(add-component Screen1 Label Label1 (set-and-coerce-property! 'Label1 'Text "Diaspora is the social network that puts you in control of your information. You decide what you\u2019d like to share, and with whom. You retain full ownership of all your information, including friend lists, messages, photos, and profile details.  Share what you want, with who you want. Diaspora uses a distributed model and you need to find a \"pod\" for your account." 'text)
+(set-and-coerce-property! 'Label1 'TextAlignment 1 'number)
+(set-and-coerce-property! 'Label1 'Visible #f 'boolean)
+(set-and-coerce-property! 'Label1 'Width -2 'number)
+)
+;;; Button2
+(add-component Screen1 Button Button2 (set-and-coerce-property! 'Button2 'BackgroundColor #x00FFFFFF 'number)
+(set-and-coerce-property! 'Button2 'FontSize 12.0 'number)
+(set-and-coerce-property! 'Button2 'Text "More about Diaspora*" 'text)
+(set-and-coerce-property! 'Button2 'TextAlignment 2 'number)
+(set-and-coerce-property! 'Button2 'Width -2 'number)
+)
+(define-event Button2 Click()
+ (set-this-form)
+ (set-and-coerce-property! 'ActivityStarter1 'DataUri "https://github.com/diaspora/diaspora" 'text)
+
+(call-component-method 'ActivityStarter1 'StartActivity (*list-for-runtime*)
+ '())
+
+)
+;;; flattr
+(add-component Screen1 Button flattr (set-and-coerce-property! 'flattr 'BackgroundColor #x00FFFFFF 'number)
+(set-and-coerce-property! 'flattr 'FontBold #t 'boolean)
+(set-and-coerce-property! 'flattr 'FontItalic #t 'boolean)
+(set-and-coerce-property! 'flattr 'FontSize 12.0 'number)
+(set-and-coerce-property! 'flattr 'FontTypeface 1 'number)
+(set-and-coerce-property! 'flattr 'Text "Flattr" 'text)
+(set-and-coerce-property! 'flattr 'TextAlignment 2 'number)
+(set-and-coerce-property! 'flattr 'TextColor #xFFFFC800 'number)
+(set-and-coerce-property! 'flattr 'Width -2 'number)
+)
+(define-event flattr Click()
+ (set-this-form)
+ (set-and-coerce-property! 'ActivityStarter1 'DataUri "https://flattr.com/thing/170048/Diaspora-Pod-Live-Uptime-watch" 'text)
+
+(call-component-method 'ActivityStarter1 'StartActivity (*list-for-runtime*)
+ '())
+
+)
+;;; Web1
+(add-component Screen1 Web Web1 (set-and-coerce-property! 'Web1 'AllowCookies #f 'boolean)
+(set-and-coerce-property! 'Web1 'SaveResponse #f 'boolean)
+(set-and-coerce-property! 'Web1 'Url "http://podupti.me/api.php?key=4r45tg" 'text)
+)
+(define-event Web1 GotText( url  responseCode  responseType  responseContent )
+ (set-this-form)
+ (if (call-yail-primitive yail-equal? (*list-for-runtime* (lexical-value responseCode)
+ 200)
+ '( any any)
+ "=")
+ (begin (set-var! allpods  (call-yail-primitive yail-list-from-csv-row (*list-for-runtime* (lexical-value responseContent)
+)
+ '( text)
+ "list from csv row")
+)
+
+(set-and-coerce-property! 'Canvas1 'Visible #f 'boolean)
+
+(set-and-coerce-property! 'pauser 'TimerInterval 1 'number)
+
+(set-and-coerce-property! 'Label1 'Visible #t 'boolean)
+
+)
+ (begin (set-and-coerce-property! 'results 'Text (call-yail-primitive string-append (*list-for-runtime* "error getting data server says: " (lexical-value responseCode)
+)
+ '( text text)
+ "join")
+ 'text)
+
+(set-and-coerce-property! 'Button1 'Text "Try Manual Update" 'text)
+
+(set-and-coerce-property! 'Button1 'Visible #t 'boolean)
+
+)
+)
+
+)
+;;; ActivityStarter1
+(add-component Screen1 ActivityStarter ActivityStarter1 (set-and-coerce-property! 'ActivityStarter1 'Action "android.intent.action.VIEW" 'text)
+)
+;;; Clock1
+(add-component Screen1 Clock Clock1 (set-and-coerce-property! 'Clock1 'TimerAlwaysFires #f 'boolean)
+)
+(define-event Clock1 Timer()
+ (set-this-form)
+ (if (call-yail-primitive yail-list-member? (*list-for-runtime* #t (get-var allpods)
+)
+ '( any list)
+ "is in list?")
+ (begin (call-component-method 'Web1 'Get (*list-for-runtime*)
+ '())
+
+)
+ (begin (set-and-coerce-property! 'ListPicker1 'Visible #t 'boolean)
+
+(set-and-coerce-property! 'ListPicker1 'Elements (get-var allpods)
+ 'list)
+
+)
+)
+
+)
+;;; pauser
+(add-component Screen1 Clock pauser (set-and-coerce-property! 'pauser 'TimerAlwaysFires #f 'boolean)
+(set-and-coerce-property! 'pauser 'TimerEnabled #f 'boolean)
+(set-and-coerce-property! 'pauser 'TimerInterval 5000 'number)
+)
+(define-event pauser Timer()
+ (set-this-form)
+ (if (call-yail-primitive < (*list-for-runtime* (get-var counter)
+ 99)
+ '( number number)
+ "<")
+ (begin (set-and-coerce-property! 'ImageSprite1 'Heading (get-var counter)
+ 'number)
+
+(set-var! counter  (call-yail-primitive + (*list-for-runtime* (get-var counter)
+ 5)
+ '( number number)
+ "+")
+)
+
+)
+ (begin (set-and-coerce-property! 'Canvas1 'Visible #f 'boolean)
+
+(set-var! done  #t)
+
+)
+)
+
+)
+;;; webvisible
+(add-component Screen1 Clock webvisible (set-and-coerce-property! 'webvisible 'TimerAlwaysFires #f 'boolean)
+(set-and-coerce-property! 'webvisible 'TimerEnabled #f 'boolean)
+(set-and-coerce-property! 'webvisible 'TimerInterval 1200 'number)
+)
+(define-event webvisible Timer()
+ (set-this-form)
+ (if (get-var done)
+ (begin (set-and-coerce-property! 'WebViewer1 'Visible #t 'boolean)
+
+)
+ (begin *the-null-value*)
+)
+
+)
+(init-runtime  #f)
+
